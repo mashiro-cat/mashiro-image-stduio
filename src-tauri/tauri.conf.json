@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Mashiro Studio",
+  "version": "0.1.0",
+  "identifier": "com.mashiro.imagegen",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Mashiro Studio · AI 生图工作台",
+        "width": 1480,
+        "height": 940,
+        "minWidth": 1200,
+        "minHeight": 720,
+        "center": true,
+        "resizable": true,
+        "decorations": false
+      }
+    ],
+    "security": {
+      "csp": null,
+      "assetProtocol": {
+        "enable": true,
+        "scope": [
+          "$APPDATA/**",
+          "$APPLOCALDATA/**",
+          "$PICTURE/**",
+          "$DOWNLOAD/**",
+          "$TEMP/**"
+        ]
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "copyright": "",
+    "shortDescription": "Mashiro Studio · 桌面 AI 生图工作台",
+    "longDescription": "生图工作台：文生图 / 图生图、提示词库、历史记录、本地 AI 超分与提示词增强。完全本机运行，图片不出本地。",
+    "category": "GraphicsAndDesign",
+    "publisher": "Mashiro",
+    "homepage": ""
+  }
+}

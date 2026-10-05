@@ -1,0 +1,30 @@
+{
+  "name": "mashiro-image-gen",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri:build": "tauri build --config src-tauri/tauri.windows.conf.json",
+    "tauri:dev": "tauri dev --config src-tauri/tauri.windows.conf.json"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-opener": "^2",
+    "pinia": "^4.0.3",
+    "vue": "^3.5.13",
+    "vue-router": "^5.3.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.16",
+    "vue-tsc": "^3.3.5"
+  },
+  "description": "Mashiro Studio · 桌面 AI 生图工作台（本地优先，图片不出本机）",
+  "license": "UNLICENSED"
+}

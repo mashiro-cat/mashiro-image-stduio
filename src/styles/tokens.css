@@ -1,0 +1,150 @@
+/* ==========================================================================
+   Mashiro Studio · 设计令牌
+   ========================================================================== */
+
+:root {
+  /* 排版 */
+  --font-sans: "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, Consolas, "Courier New", monospace;
+
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-21: 21px;
+  --fs-26: 26px;
+  --fs-32: 32px;
+
+  /* 圆角 */
+  --r-xs: 6px;
+  --r-sm: 8px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 18px;
+  --r-full: 999px;
+
+  /* 间距 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+
+  /* 布局 */
+  --sidebar-w: 236px;
+  --sidebar-w-collapsed: 62px;
+  --titlebar-h: 40px;
+  --traffic-lights-w: 78px;
+  --page-max: 1560px;
+
+  /* 动画 */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur: 0.18s;
+
+  /* 品牌 */
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-active: #3730a3;
+  --accent-fg: #ffffff;
+  --accent-soft: #eef0fe;
+  --accent-soft-fg: #4f46e5;
+  --accent-ring: rgba(79, 70, 229, 0.22);
+  --brand-grad: linear-gradient(135deg, #6366f1 0%, #8b5cf6 52%, #d946ef 100%);
+  --brand-grad-soft: linear-gradient(135deg, #eef0fe 0%, #f6eeff 100%);
+
+  --success: #0ea371;
+  --success-soft: #e6f7f1;
+  --warning: #d98207;
+  --warning-soft: #fdf3e2;
+  --danger: #e2384d;
+  --danger-soft: #fdecee;
+  --info: #2b7fff;
+  --info-soft: #eaf2ff;
+
+  /* 表面层次（浅色） */
+  --bg-app: #f4f5f7;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f8f9fb;
+  --bg-muted: #f1f2f6;
+  --bg-hover: #f4f5f9;
+  --bg-ink: #16181d;
+
+  --border: #e7e9ef;
+  --border-strong: #d7dbe4;
+  --border-input: #dfe2ea;
+
+  --text: #16181d;
+  --text-secondary: #5c6472;
+  --text-tertiary: #8b93a2;
+  --text-faint: #a8aeb9;
+
+  --canvas: #f0f1f4;
+
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05), 0 2px 6px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 2px 6px rgba(16, 24, 40, 0.06), 0 10px 24px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 8px 20px rgba(16, 24, 40, 0.1), 0 24px 56px rgba(16, 24, 40, 0.14);
+  --shadow-pop: 0 12px 32px rgba(16, 24, 40, 0.16);
+
+  --scrollbar: #d3d7e0;
+  --scrollbar-hover: #b9bfcb;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --accent: #7c7cf9;
+  --accent-hover: #8f8ffb;
+  --accent-active: #6b6bf4;
+  --accent-fg: #ffffff;
+  --accent-soft: rgba(124, 124, 249, 0.15);
+  --accent-soft-fg: #a5a5ff;
+  --accent-ring: rgba(124, 124, 249, 0.3);
+  --brand-grad: linear-gradient(135deg, #6366f1 0%, #8b5cf6 52%, #d946ef 100%);
+  --brand-grad-soft: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(217, 70, 239, 0.12));
+
+  --success: #34d399;
+  --success-soft: rgba(52, 211, 153, 0.14);
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --info: #60a5fa;
+  --info-soft: rgba(96, 165, 250, 0.14);
+
+  --bg-app: #0e1014;
+  --bg-surface: #171a21;
+  --bg-subtle: #1c2028;
+  --bg-muted: #23272f;
+  --bg-hover: #262b34;
+  --bg-ink: #f2f4f8;
+
+  --border: #272c35;
+  --border-strong: #353b46;
+  --border-input: #303640;
+
+  --text: #e9ecf2;
+  --text-secondary: #9ba4b3;
+  --text-tertiary: #737c8c;
+  --text-faint: #5b6473;
+
+  --canvas: #0b0d11;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.45), 0 12px 28px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5), 0 28px 64px rgba(0, 0, 0, 0.45);
+  --shadow-pop: 0 14px 36px rgba(0, 0, 0, 0.55);
+
+  --scrollbar: #363c46;
+  --scrollbar-hover: #474e5a;
+
+  color-scheme: dark;
+}

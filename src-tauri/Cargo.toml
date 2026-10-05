@@ -1,0 +1,80 @@
+[package]
+name = "mashiro-image-gen"
+version = "0.1.0"
+description = "Mashiro Studio - AI 生图工作台"
+authors = ["mashiro"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "mashiro_image_gen_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["protocol-asset"] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+reqwest = { version = "0.12", features = ["json", "multipart"] }
+base64 = "0.22"
+
+# 本地超分（upscale 域）：ONNX Runtime 绑定 + 图片编解码。
+#
+# # 为什么必须 download-binaries（静态链接），不能用 load-dynamic
+#
+# `load-dynamic` 在 Tauri 里**必然失败**，实测报错：
+# `Failed to load ONNX Runtime dylib: BadVersion { version_str: "1.17.1" }`。
+# 进程跑在 WebView2 里，而 WebView2 自带一份 onnxruntime.dll
+# （`Microsoft\EdgeWebView\Application\135.*\`，1.17.1）。Windows 对同名模块
+# 只加载一次，`dlopen("onnxruntime.dll")` 会复用已加载的那份，拿不到指定版本。
+# 系统 PATH 里的其他副本（PowerToys / WSL / EdgeCore）实测都是 1.23，
+# 仍低于 ort 2.0.0-rc.13 要求的 1.27；靠降 feature 迁就用户机器上
+# 「恰好装了某个软件」不是可发布的做法。
+#
+# `download-binaries` 在构建期把 ONNX Runtime 下到 `%LOCALAPPDATA%\ort.pyke.io\`，
+# 编译时 **static** 链进二进制（`rustc-link-lib=static=onnxruntime`）。
+# 版本必然匹配，且**运行时不需要任何 dll**——顺带消掉了
+# 「发布前要自己带 onnxruntime.dll」那个坑。代价是首次构建要联网。
+#
+# `directml` 提供 DirectML 执行提供器（GPU 加速）。
+# **选它而不是 cuda**：CUDA 只支持 NVIDIA 且打包体积大数倍；
+# DirectML 覆盖所有 Windows 显卡（N/A/AMD/Intel 核显都走它），
+# 且系统本来就带 DirectML.dll（`copy-dylibs` 会一并拷）。
+# 实测 RTX 3060 Ti 上约 1.18× 加速——不算多，但比没有强。
+ort = { version = "2.0.0-rc.13", default-features = false, features = [
+  "std",
+  "ndarray",
+  "download-binaries",
+  "copy-dylibs",
+  "tls-native",
+  "api-27",
+  "directml",
+] }
+image = { version = "0.25", default-features = false, features = [
+  "png",
+  "jpeg",
+  "webp",
+] }
+# ort 的 TensorRef 构造入口接受 ndarray 数组（row-major NCHW 与 ONNX 约定一致，
+# 省去手工算平面偏移）。**版本必须与 ort 依赖的那份一致**（当前 ort 2.0.0-rc.13
+# 用的是 0.17）——两版本并存时 `ArrayBase` 是两个不同类型，
+# 编译会报 `TensorArrayData` 未实现，而提示信息里并不会说「版本不匹配」。
+ndarray = "0.17"
+# 模型下载要写文件、要流式落盘。Tauri 本就传递引入了 tokio（fs/io-util feature 齐全），
+# 但这里显式声明——不依赖「恰好被别人带进来」这种隐式契约。
+tokio = { version = "1", features = ["fs", "io-util"] }
+
+# Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+panic = "abort"
+strip = true
