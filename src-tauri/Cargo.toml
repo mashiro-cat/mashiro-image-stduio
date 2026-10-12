@@ -1,6 +1,6 @@
 [package]
 name = "mashiro-image-gen"
-version = "0.1.0"
+version = "0.8.0"
 description = "Mashiro Studio - AI 生图工作台"
 authors = ["mashiro"]
 edition = "2021"
